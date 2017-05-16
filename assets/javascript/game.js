@@ -6,29 +6,43 @@ var theWord = ["cello", "strings", "classical", "violin", "instrument", "conduct
 //Set inital valus for win, loss, and number of guesses
 var win = 0;
 var lose = 0;
-var guessNumber = 10;
+var pickedWord, placeholder, splitWord, totalLetters;
+var guessNumber = 0;
 var alreadyGuessed = [];
+var correctLetters = 0;
+
+//create function initialize
+function initializeGame() {
+
+guessNumber = 10;
+alreadyGuessed = [];
+correctLetters = 0;
 
 //Randomly choose a word for the user to guess
 	for (var i = 0; i < theWord.length; i++) {
 		var index = Math.floor(Math.random()*theWord.length);
-		var pickedWord = theWord[index];
+		pickedWord = theWord[index];
 		theWord.splice(index, 1);  // This removes the picked element from the array
 
 //Generate placeholder text for the word the computer chooses
-		var placeholder = pickedWord.split("");
+		placeholder = pickedWord.split("");
 		for (var i = 0; i < placeholder.length; i++) {
 			placeholder[i] = " _";
-			console.log (placeholder[i]);
+			// console.log (placeholder[i]);
 			} 
 	}; //<--ending for-loop curly brace
 
+
 //Creates array with the letters of the choosen word
-var splitWord = pickedWord.split("");
-console.log(splitWord);
+	splitWord = pickedWord.split("");
+	console.log(splitWord);
 
-var totalLetters = splitWord.length;
+	totalLetters = splitWord.length;
+	console.log(totalLetters);
+	
+}; //ending initialize() brace
 
+initializeGame();
 
 // Check if user input is only alphabet keys
 function lettersOnly() {
@@ -68,14 +82,14 @@ if (lettersOnly() == true) {
 		if ((prevGuess()) ==false && (lettersOnly()==true)){
 
 			if ((userGuess == splitWord[i])) {
-			console.log ("You guessed " + userGuess);
+			// console.log ("You guessed " + userGuess);
 			guessNumber--;
 			alreadyGuessed.push(userGuess);
 		}
 	
 
 		else if ((userGuess !== splitWord[i])) {
-			console.log("Wrong guess.")
+			// console.log("Wrong guess.")
 			guessNumber--;
 			alreadyGuessed.push(userGuess);
 		}
@@ -100,18 +114,23 @@ if (lettersOnly() == true) {
 		}
 
 // Check if user won
-var correctLetters = 0;
+correctLetters = 0;
 for (var i = 0; i < splitWord.length; i++) {
 
 		if ((splitWord[i] == placeholder[i])){
 			correctLetters++;
 			console.log("correct letters value: " + correctLetters);
 			
-			if (totalLetters == correctLetters) {
+			if ((totalLetters == correctLetters) && (guessNumber > 0)) {
 				console.log("Congratulations!")
 				win++;
-			//NEED TO AUTOMATICALLY RESET GAME AND PICK NEW WORD
+				initializeGame();
 			}
+
+		} else if ((totalLetters !== correctLetters) && (guessNumber == 0)) {
+			console.log("You lose")
+			lose++;
+			initializeGame();
 		}
 };
 
