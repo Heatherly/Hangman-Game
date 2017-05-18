@@ -3,6 +3,20 @@
 
 var theWord = ["cello", "strings", "classical", "violin", "instrument", "conductor", "symphony", "bass", "viola", "allegro"];
 
+var imgArray = [
+    'assets/images/cello.jpg',
+    'assets/images/strings.jpg',
+    'assets/images/classicalcomposers.jpg',
+    'assets/images/violin.jpg',
+    'assets/images/instruments.jpg',
+    'assets/images/conductor.jpg',
+    'assets/images/symphony.jpg',
+    'assets/images/base.jpg',
+    'assets/images/viola.jpg',
+    'assets/images/allegro.jpg',
+];
+
+
 //Set inital valus for win, loss, and number of guesses
 var win = 0;
 var lose = 0;
@@ -17,26 +31,29 @@ guessNumber = 10;
 alreadyGuessed = [];
 correctLetters = 0;
 
+
 //Randomly choose a word for the user to guess
 	for (var i = 0; i < theWord.length; i++) {
-		var index = Math.floor(Math.random()*theWord.length);
-		pickedWord = theWord[index];
-		theWord.splice(index, 1);  // This removes the picked element from the array
+		random = Math.floor(Math.random()*theWord.length);
+		pickedWord = theWord[random];
+		theWord[random] = imgArray
+		theWord.splice(random, 1);  // This removes the picked element from the array
+	};
 
 //Generate placeholder text for the word the computer chooses
 		placeholder = pickedWord.split("");
 		for (var i = 0; i < placeholder.length; i++) {
 			placeholder[i] = " _";
 			console.log (placeholder[i]);
-			} 
-	}; //<--ending for-loop curly brace
+		};
 
+	//PLACEHOLDER is "printed" to html at the end of this file 
 
 //Creates array with the letters of the choosen word as my "master"
 	splitWord = pickedWord.split("");
-
 //Counts the number of total letters in the randommly chosen word
 	totalLetters = splitWord.length;	
+
 }; //ending initialize() brace
 
 initializeGame();
@@ -51,7 +68,7 @@ function lettersOnly() {
 		console.log("Please press a letter key only");
 		return false;
 	}
-}
+};
 
 // When the user presses a key, it will run the following function...
 document.onkeyup = function(event) {
@@ -67,7 +84,7 @@ function prevGuess () {
 	else { 
 		return false;
 	}
-}
+};
 
 if (lettersOnly() == true) {
 	console.log("You pressed alphabet key")
@@ -108,17 +125,20 @@ if (lettersOnly() == true) {
 };
 
 // Get the "_" to change back to the letter guessed
-		for (var i = 0; i < splitWord.length; i++) {
-			if (splitWord[i] == userGuess) {
-				placeholder[i]=placeholder[i].replace(' _', userGuess);
-				console.log(placeholder[i]);
+	for (var i = 0; i < splitWord.length; i++) {
+		if (splitWord[i] == userGuess) {
+			placeholder[i]=placeholder[i].replace(' _', userGuess);
+			console.log(placeholder[i]);
 			}
-		}
+		};
 
 
 // Check if user won or loss
 correctLetters = 0;
+
+
 for (var i = 0; i < splitWord.length; i++) {
+
 
 		if ((splitWord[i] == placeholder[i])){
 			correctLetters++;
@@ -127,17 +147,17 @@ for (var i = 0; i < splitWord.length; i++) {
 			if ((totalLetters == correctLetters) && (guessNumber > 0)) {
 				console.log("Congratulations!")
 				win++;
+				document.querySelector("#answer").innerHTML = "<p><strong>The correct word was: " + pickedWord +"</strong></p>";
+				document.querySelector("#imgPlaceholder").innerHTML = '<img src="' + imgArray[i] + '">'
 				initializeGame();
 			}
 
 		} else if ((totalLetters !== correctLetters) && (guessNumber <= 0)) {
 			console.log("You lose")
 			lose++;
+			document.querySelector("#answer").innerHTML = "<p><strong>Sorry! The correct word was: " + pickedWord +"</strong></p>";
 			initializeGame();
-		// } else {
-		// 	lose++;
-		// 	initializeGame();
-		}
+			}
 };
 
 // Create the HTML that will be injected into <span> and displayed on the page.
@@ -147,19 +167,18 @@ for (var i = 0; i < splitWord.length; i++) {
 	    document.querySelector("#wordPlaceholder").innerHTML = currentWord;
 
   // Display Wins value on page
-	    var winner = win;
 		document.querySelector("#wins").innerHTML = win;
 
   // Display Loses value on page
-	    var loss = lose;
 		document.querySelector("#losses").innerHTML = lose;
 
   // Display Guesses Remaining value on page
-	    var guess = guessNumber;
-		document.querySelector("#guessRemain").innerHTML = guess;
+		document.querySelector("#guessRemain").innerHTML = guessNumber;
 
   // Display the Letters Already Guessed on page
 	    var guessedLetters = alreadyGuessed.toString();
 		document.querySelector("#guessLetter").innerHTML = guessedLetters;
+
+
 
 }; //<--ending keyup function curly brace
