@@ -3,7 +3,7 @@
 
 var theWord = ["cello", "strings", "classical", "violin", "instrument", "conductor", "symphony", "bass", "viola", "allegro"];
 
-var imgArray = [
+var imgArray = [ 
     'assets/images/cello.jpg',
     'assets/images/strings.jpg',
     'assets/images/classicalcomposers.jpg',
@@ -11,7 +11,7 @@ var imgArray = [
     'assets/images/instruments.jpg',
     'assets/images/conductor.jpg',
     'assets/images/symphony.jpg',
-    'assets/images/base.jpg',
+    'assets/images/bass.jpg',
     'assets/images/viola.jpg',
     'assets/images/allegro.jpg',
 ];
@@ -32,26 +32,20 @@ alreadyGuessed = [];
 correctLetters = 0;
 
 
-//Randomly choose a word for the user to guess
-	for (var i = 0; i < theWord.length; i++) {
-		random = Math.floor(Math.random()*theWord.length);
-		pickedWord = theWord[random];
-		theWord[random] = imgArray
-		theWord.splice(random, 1);  // This removes the picked element from the array
-	};
+// //Randomly choose a word for the user to guess
+		pickedWord = theWord[Math.floor(Math.random()*theWord.length)];
+		console.log("pickedWord is " + pickedWord + ", index position " + theWord.indexOf(pickedWord));
+		theWord.splice(pickedWord, 0);  // This removes the picked element from the array
 
 //Generate placeholder text for the word the computer chooses
 		placeholder = pickedWord.split("");
 		for (var i = 0; i < placeholder.length; i++) {
 			placeholder[i] = " _";
-			console.log (placeholder[i]);
-		};
+			// console.log (placeholder[i]);
+		};	//PLACEHOLDER is "printed" to html at the end of this file 
 
-	//PLACEHOLDER is "printed" to html at the end of this file 
-
-//Creates array with the letters of the choosen word as my "master"
+//Creates array with the letters of the choosen word as my "answer" to compare letter guesses to.
 	splitWord = pickedWord.split("");
-//Counts the number of total letters in the randommly chosen word
 	totalLetters = splitWord.length;	
 
 }; //ending initialize() brace
@@ -101,12 +95,12 @@ if (lettersOnly() == true) {
 			if ((userGuess == splitWord[i])) {
 			// console.log ("You guessed " + userGuess);
 			alreadyGuessed.push(userGuess);
-		}
-		else if ((userGuess == splitWord[i]) && (prevGuess()==true) && (lettersOnly()==true)) {
+			}
+			else if ((userGuess == splitWord[i]) && (prevGuess()==true) && (lettersOnly()==true)) {
 			console.log("keep going");
-		}
+			}
 
-
+// can there be a second part to the for loop here?
 		else if ((userGuess != splitWord[i])) {
 			// console.log("Wrong guess.")
 			guessNumber--;
@@ -136,7 +130,7 @@ if (lettersOnly() == true) {
 // Check if user won or loss
 correctLetters = 0;
 
-
+console.log("pickedWord is " + pickedWord + ", index position " + theWord.indexOf(pickedWord));
 for (var i = 0; i < splitWord.length; i++) {
 
 
@@ -148,14 +142,14 @@ for (var i = 0; i < splitWord.length; i++) {
 				console.log("Congratulations!")
 				win++;
 				document.querySelector("#answer").innerHTML = "<p><strong>The correct word was: " + pickedWord +"</strong></p>";
-				document.querySelector("#imgPlaceholder").innerHTML = '<img src="' + imgArray[i] + '">'
+				document.querySelector("#imgPlaceholder").innerHTML = '<img src="' + imgArray[theWord.indexOf(pickedWord)] + '">'
 				initializeGame();
 			}
 
 		} else if ((totalLetters !== correctLetters) && (guessNumber <= 0)) {
 			console.log("You lose")
 			lose++;
-			document.querySelector("#answer").innerHTML = "<p><strong>Sorry! The correct word was: " + pickedWord +"</strong></p>";
+			document.querySelector("#imgPlaceholder").innerHTML = '<img src="' + imgArray[theWord.indexOf(pickedWord)] + '">'
 			initializeGame();
 			}
 };

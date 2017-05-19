@@ -24,6 +24,11 @@ p {
 	font-size: 16px;
 }
 
+img {
+	padding-bottom: 20px;	
+	border: 1px solid #DDD;
+}
+
 footer {
 	position: fixed;
 	bottom: 0;
