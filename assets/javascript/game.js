@@ -43,6 +43,7 @@ function initializeGame() {
 
 //Creates array with the letters of the choosen word as my "answer" to compare letter guesses to.
 	splitWord = pickedWord.split("");
+	console.log("The answer is " + splitWord);
 	totalLetters = splitWord.length;	
 
 }; //ending initialize() brace
@@ -53,7 +54,7 @@ function lettersOnly() {
 	if ((charCode > 64 && charCode < 91)) {
 		return true;
 	} else {
-		alert("Please press a letter key only");
+		// alert("Please press a letter key only");
 		return false;
 	}
 };
@@ -61,11 +62,11 @@ function lettersOnly() {
 function prevGuess () {
 var userGuess = event.key;
 	if (alreadyGuessed.includes(userGuess)) { 
-		console.log("You already guessed that letter!");
+		// console.log("You already guessed that letter!");
 		return true;
 	}
 	else { 
-		console.log("Unique guess.");
+		// console.log("Unique guess.");
 		return false;
 	}
 };
@@ -81,12 +82,12 @@ userGuess = event.key;
 		if ((prevGuess()===false) && (lettersOnly())) {
 
 			if (splitWord.includes(userGuess)) {
-			console.log ("You guessed the " + userGuess + " letter");
+			// console.log ("You guessed the " + userGuess + " letter");
 			alreadyGuessed.push(userGuess);
 			}
 			
 			else if (splitWord != userGuess) {
-			console.log("Wrong guess.");
+			// console.log("Wrong guess.");
 			guessNumber--;
 			alreadyGuessed.push(userGuess);
 			}
@@ -115,7 +116,7 @@ userGuess = event.key;
 			}
 
 		} else if ((totalLetters !== correctLetters) && (guessNumber <= 0)) {
-			console.log("You lose")
+			console.log("You lose.")
 			lose++;
 			document.querySelector("#answer").innerHTML = "<p><strong>Sorry! The correct word was: " + pickedWord +"</strong></p>";
 			document.querySelector("#imgPlaceholder").innerHTML = '<img src="' + imgArray[theWord.indexOf(pickedWord)] + '">'
