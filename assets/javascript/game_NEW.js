@@ -22,6 +22,7 @@ var lose = 0;
 var currentWord, placeholder, splitWord, totalLetters, guessCounter, userGuess, correctLetters;
 
 
+
 // create function initialize
 function initializeGame() {
 
@@ -46,8 +47,18 @@ function initializeGame() {
 	totalLetters = placeholder.length;
 }; //ending initialize() brace
 
-initializeGame();
+// Check if user input is only alphabet keys
 
+	// userGuess = event.keyCode;
+function lettersOnly () {	
+	document.onkeypress = function(e) {
+    e = e || window.event;
+    var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+    if (charCode) {
+        alert("Character typed: " + String.fromCharCode(charCode));
+    }
+}
+}
 // Check if the letter has already been used
 function prevGuess () {
 	if (usedLetters.includes(userGuess)) { 
@@ -55,34 +66,32 @@ function prevGuess () {
 	}
 	else { 
 		return false;
+		usedLetters.push(userGuess);
 	}
-}
+};
 
-// When the user presses a key, it will run the following function...
-document.onkeyup = function(event) {
 // Determine which key was pressed
-	userGuess = event.key;
-
-// Check if user input is only alphabet keys
-check = function lettersOnly() {
-	if (event.keyCode >= 65 && event.keyCode <= 90) {
-    return true;
-	} else {
-	alert("Please press only alphabet keys!")
+function validate() {
+	for (var i = 0; i < totalLetters; i++) {
+		if (userGuess == currentWord[i]) {
+			console.log ("You guessed " + userGuess);
+		}
+		else {
+			console.log("Keep guessing!");
+		}
 	}
-}
+};
+
+initializeGame();
+
+lettersOnly ()
+// When the user presses a key, it will run the following function...
+
+
 
 // Comparing the user's guess to the letters contained in splitWord array (the picked word)
 	// for (var i = 0; i < totalLetters; i++) {
 
-			if (userGuess == currentWord[i]) {
-			console.log ("You guessed " + userGuess);
-			usedLetters.push(userGuess);
-			}
-			else {
-			console.log("keep going");
-			}
-		};
 // };
 // // can there be a second part to the for loop here?
 // 		else if ((userGuess != splitWord[i])) {
